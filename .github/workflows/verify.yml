@@ -1,0 +1,35 @@
+name: Verify forms
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  modular-features:
+    name: modular-features (default)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install templetry
+        run: |
+          curl -sL -o /usr/local/bin/templetry \
+            "https://github.com/Templetry/engine/releases/download/v0.1.0/templetry-linux-amd64"
+          chmod +x /usr/local/bin/templetry
+      - name: Render
+        run: |
+          templetry render --template ./modular-features --out "$RUNNER_TEMP/out" \
+            --set "project_name=Verify App" --set "base_package=com.verify.app"
+          chmod +x "$RUNNER_TEMP/out/gradlew"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Assemble rendered output
+        working-directory: ${{ runner.temp }}/out
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
