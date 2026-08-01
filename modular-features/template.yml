@@ -1,0 +1,25 @@
+schema_version: 1
+name: android-modular-features
+description: Android multi-module production base — core/data/domain/feature layers, convention plugins, Compose
+platform: android
+framework: android
+
+variables:
+  - key: project_name
+    label: Project name
+    type: string
+    pattern: "^[A-Za-z][A-Za-z0-9 ]*$"
+  - key: base_package
+    label: Base package
+    type: string
+    pattern: "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$"
+
+identity:
+  - from: "AndroidNativeBase"      # repo name in docs
+    to: "{project_name.pascal}"
+  - from: "es.sebas1705"           # base package (also renames es/sebas1705 dirs)
+    to: "{base_package}"
+  - from: "AndroidModApp"          # rootProject.name
+    to: "{project_name.pascal}"
+  - from: "androidmodapp"          # applicationId suffix
+    to: "{project_name.flat}"
