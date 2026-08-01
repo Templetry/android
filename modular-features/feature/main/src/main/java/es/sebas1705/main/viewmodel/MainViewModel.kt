@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import es.sebas1705.common.mvi.MVIBaseViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -24,7 +25,7 @@ class MainViewModel @Inject constructor(
 
     override fun initState(): MainState = MainState()
 
-    override fun intentHandler(intent: MainIntent) {
+    override fun intentHandler(intent: MainIntent): Job = execute {
         when (intent) {
             is MainIntent.ChargeData -> chargeData()
         }

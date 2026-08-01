@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import es.sebas1705.common.mvi.MVIBaseViewModel
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 /**
@@ -23,7 +24,7 @@ class MviSampleViewModel @Inject constructor(
 
     override fun initState(): MviSampleState = MviSampleState()
 
-    override fun intentHandler(intent: MviSampleIntent) {
+    override fun intentHandler(intent: MviSampleIntent): Job = execute {
     }
 
 
