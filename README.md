@@ -5,7 +5,7 @@ Android native templates for [Templetry](https://github.com/Templetry). One **pa
 | Form | What it is | Status |
 |---|---|---|
 | [`modular-features/`](modular-features/) | Multi-module production base — `core/data/domain/feature` layers, convention plugins, Compose | ✅ ready |
-| `single-module/` | Single-module starter | 🏗️ planned |
+| [`single-module/`](single-module/) | Single-module starter — one `app` module, Kotlin + Compose Material 3, selectable `min_sdk` | ✅ ready |
 
 ## Usage
 

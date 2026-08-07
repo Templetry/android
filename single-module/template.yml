@@ -1,0 +1,28 @@
+schema_version: 1
+name: android-single-module
+description: Android single-module starter — one app module, Kotlin + Compose Material 3, version catalog
+platform: android
+framework: android
+
+variables:
+  - key: project_name
+    label: Project name
+    type: string
+    pattern: "^[A-Za-z][A-Za-z0-9 ]*$"
+  - key: base_package
+    label: Base package
+    type: string
+    pattern: "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$"
+  - key: min_sdk
+    label: Minimum SDK
+    type: select
+    options: ["24", "26", "31"]
+    default: "26"
+
+identity:
+  - from: "AndroidSingleApp"       # rootProject.name, app label, docs
+    to: "{project_name.pascal}"
+  - from: "es.sebas1705"           # base package (also renames es/sebas1705 dirs)
+    to: "{base_package}"
+  - from: "androidsingleapp"       # applicationId suffix, package dir
+    to: "{project_name.flat}"
