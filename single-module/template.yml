@@ -1,8 +1,9 @@
 schema_version: 1
 name: android-single-module
 description: Android single-module starter — one app module, Kotlin + Compose Material 3, version catalog
-platform: android
-framework: android
+kinds: [android]
+languages: [kotlin]
+frameworks: [jetpack-compose]
 
 variables:
   - key: project_name
