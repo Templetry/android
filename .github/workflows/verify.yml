@@ -19,11 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install templetry
-        run: |
-          curl -fsSL -o /usr/local/bin/templetry \
-            "https://github.com/Templetry/engine/releases/download/v1.7.0/templetry-linux-amd64"
-          chmod +x /usr/local/bin/templetry
+      - uses: Templetry/.github/actions/setup-templetry@main
       - name: Render
         run: |
           templetry render --template ./modular-features --out "$RUNNER_TEMP/out" \
@@ -49,11 +45,7 @@ jobs:
           - { name: min-sdk-24, args: --set min_sdk=24 }
     steps:
       - uses: actions/checkout@v4
-      - name: Install templetry
-        run: |
-          curl -fsSL -o /usr/local/bin/templetry \
-            "https://github.com/Templetry/engine/releases/download/v1.7.0/templetry-linux-amd64"
-          chmod +x /usr/local/bin/templetry
+      - uses: Templetry/.github/actions/setup-templetry@main
       - name: Render
         run: |
           templetry render --template ./single-module --out "$RUNNER_TEMP/out" \
