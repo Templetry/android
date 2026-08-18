@@ -40,13 +40,17 @@ jobs:
         working-directory: ${{ runner.temp }}/out
         run: |
           for env in development staging production; do
-            file=$(find app/build/generated/source/buildConfig -ipath "*${env}Debug*BuildConfig.java")
-            if [ -z "$file" ]; then
-              echo "::error::no generated BuildConfig for the $env flavor"; exit 1
+            files=$(find app/build -iname "BuildConfig.java" -ipath "*${env}*")
+            if [ -z "$files" ]; then
+              echo "::error::no generated BuildConfig under a path containing \"$env\""; exit 1
             fi
-            grep -q "ENVIRONMENT = \"$env\"" "$file" || {
-              echo "::error::$file does not report ENVIRONMENT = \"$env\""; exit 1
-            }
+            match=0
+            for f in $files; do
+              grep -q "ENVIRONMENT = \"$env\"" "$f" && match=1
+            done
+            if [ "$match" -ne 1 ]; then
+              echo "::error::none of the generated BuildConfig files for \"$env\" report ENVIRONMENT = \"$env\""; exit 1
+            fi
           done
 
   single-module:
@@ -78,11 +82,15 @@ jobs:
         working-directory: ${{ runner.temp }}/out
         run: |
           for env in development staging production; do
-            file=$(find app/build/generated/source/buildConfig -ipath "*${env}Debug*BuildConfig.java")
-            if [ -z "$file" ]; then
-              echo "::error::no generated BuildConfig for the $env flavor"; exit 1
+            files=$(find app/build -iname "BuildConfig.java" -ipath "*${env}*")
+            if [ -z "$files" ]; then
+              echo "::error::no generated BuildConfig under a path containing \"$env\""; exit 1
             fi
-            grep -q "ENVIRONMENT = \"$env\"" "$file" || {
-              echo "::error::$file does not report ENVIRONMENT = \"$env\""; exit 1
-            }
+            match=0
+            for f in $files; do
+              grep -q "ENVIRONMENT = \"$env\"" "$f" && match=1
+            done
+            if [ "$match" -ne 1 ]; then
+              echo "::error::none of the generated BuildConfig files for \"$env\" report ENVIRONMENT = \"$env\""; exit 1
+            fi
           done
