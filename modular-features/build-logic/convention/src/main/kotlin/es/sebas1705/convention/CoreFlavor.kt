@@ -18,18 +18,36 @@ enum class FlavorDimension {
 }
 
 /**
- * Enum class that represents the different flavors of the application.
+ * The three environment profiles every Templetry catalog form ships
+ * (ADR-0018), realized here as Android product flavors — the ecosystem's own
+ * mechanism, alongside `buildConfigField`.
+ *
+ * `environment` is the canonical lowercase name every profile reports on
+ * `BuildConfig.ENVIRONMENT`, kept separate from the flavor's own identifier
+ * (`Development`/`Staging`/`Production`, matching this project's existing
+ * capitalized flavor style) so the two can diverge without either breaking.
  *
  * @since 0.1.0
  * @author Sebas1705 01/03/2025
  */
-enum class CoreFlavor(val dimension: FlavorDimension, val applicationIdSuffix : String? = null) {
-    Dev(FlavorDimension.CONTENT_TYPE, ".dev"),
-    Pro(FlavorDimension.CONTENT_TYPE, ".pro"),
+enum class CoreFlavor(
+    val dimension: FlavorDimension,
+    val environment: String,
+    val applicationIdSuffix: String? = null,
+    val verboseLogging: Boolean = false,
+) {
+    Development(FlavorDimension.CONTENT_TYPE, "development", ".dev", verboseLogging = true),
+    Staging(FlavorDimension.CONTENT_TYPE, "staging", ".staging", verboseLogging = true),
+    Production(FlavorDimension.CONTENT_TYPE, "production", ".pro", verboseLogging = false),
 }
 
 /**
  * Method that configures the flavors of each module and centralizes all the configuration in one place.
+ *
+ * Each flavor gets three `BuildConfig` fields: `ENVIRONMENT` (the canonical
+ * name), `API_BASE_URL` (read from `app/secrets.properties`, since it is the
+ * one value a developer plausibly wants to override locally) and
+ * `VERBOSE_LOGGING` (fixed per flavor — production never ships it on).
  *
  * @since 0.1.0
  * @author Sebas1705 01/03/2025
@@ -56,11 +74,13 @@ fun configureFlavors(
                         applicationIdSuffix = coreFlavor.applicationIdSuffix
                     }
                 }
+                buildConfigField("String", "ENVIRONMENT", "\"${coreFlavor.environment}\"")
                 buildConfigField(
                     "String",
-                    "EXAMPLE_URL",
-                    "\"${secretsProperties["EXAMPLE_URL_${coreFlavor.name.uppercase()}"] ?: ""}\""
+                    "API_BASE_URL",
+                    "\"${secretsProperties["API_BASE_URL_${coreFlavor.name.uppercase()}"] ?: ""}\""
                 )
+                buildConfigField("boolean", "VERBOSE_LOGGING", coreFlavor.verboseLogging.toString())
             }
         }
     }

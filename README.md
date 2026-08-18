@@ -16,3 +16,7 @@ templetry render --template ./android/modular-features --out ./my-app \
 ```
 
 Forms are **chosen**, not combined. Inside a form, the manifest's features are freely combinable.
+
+## Environment profiles
+
+Both forms ship `development` / `staging` / `production` as Android product flavors — the ecosystem's own mechanism (ADR-0018) — each with its own `BuildConfig.ENVIRONMENT`, `API_BASE_URL` and `VERBOSE_LOGGING`. Unlike the profile feature in most other catalog forms, this is **not togglable**: the flavor dimension is load-bearing infrastructure (`modular-features`' convention plugins wire it in unconditionally), not an add-on, so `assembleDebug` already builds all three flavors' debug variants.

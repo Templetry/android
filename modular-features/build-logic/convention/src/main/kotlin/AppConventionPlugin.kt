@@ -17,8 +17,8 @@ class AppConventionPlugin: Plugin<Project> {
             val hasGoogleServicesConfig =
                 rootProject.file("./app/google-services.json").exists() ||
                     rootProject.file("./app/src/debug/google-services.json").exists() ||
-                    rootProject.file("./app/src/Dev/google-services.json").exists() ||
-                    rootProject.file("./app/src/DevDebug/google-services.json").exists()
+                    rootProject.file("./app/src/Development/google-services.json").exists() ||
+                    rootProject.file("./app/src/DevelopmentDebug/google-services.json").exists()
 
             with(pluginManager) {
                 apply("com.android.application")

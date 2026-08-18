@@ -32,7 +32,22 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Assemble rendered output
         working-directory: ${{ runner.temp }}/out
+        # Flavor dimensions mean assembleDebug already aggregates every
+        # environment's debug variant (developmentDebug, stagingDebug,
+        # productionDebug) — no matrix needed to cover the three of them.
         run: ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Each flavor's BuildConfig reports its own environment (ADR-0018)
+        working-directory: ${{ runner.temp }}/out
+        run: |
+          for env in development staging production; do
+            file=$(find app/build/generated/source/buildConfig -ipath "*${env}Debug*BuildConfig.java")
+            if [ -z "$file" ]; then
+              echo "::error::no generated BuildConfig for the $env flavor"; exit 1
+            fi
+            grep -q "ENVIRONMENT = \"$env\"" "$file" || {
+              echo "::error::$file does not report ENVIRONMENT = \"$env\""; exit 1
+            }
+          done
 
   single-module:
     name: single-module (${{ matrix.combo.name }})
@@ -59,3 +74,15 @@ jobs:
       - name: Assemble rendered output
         working-directory: ${{ runner.temp }}/out
         run: ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Each flavor's BuildConfig reports its own environment (ADR-0018)
+        working-directory: ${{ runner.temp }}/out
+        run: |
+          for env in development staging production; do
+            file=$(find app/build/generated/source/buildConfig -ipath "*${env}Debug*BuildConfig.java")
+            if [ -z "$file" ]; then
+              echo "::error::no generated BuildConfig for the $env flavor"; exit 1
+            fi
+            grep -q "ENVIRONMENT = \"$env\"" "$file" || {
+              echo "::error::$file does not report ENVIRONMENT = \"$env\""; exit 1
+            }
+          done

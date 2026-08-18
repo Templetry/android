@@ -46,6 +46,16 @@ fun Home(modifier: Modifier = Modifier) {
             text = "Single-module Android starter",
             style = MaterialTheme.typography.bodyMedium,
         )
+        // Hidden in production — a badge that is always visible stops being
+        // information. BuildConfig.ENVIRONMENT is the flavor's own build
+        // constant, so there is nothing to read at runtime and nothing that
+        // can be misconfigured outside the build itself.
+        if (BuildConfig.ENVIRONMENT != "production") {
+            Text(
+                text = BuildConfig.ENVIRONMENT,
+                style = MaterialTheme.typography.labelSmall,
+            )
+        }
     }
 }
 
