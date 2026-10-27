@@ -1,4 +1,4 @@
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import es.sebas1705.convention.implementation
 import es.sebas1705.convention.libs
 import org.gradle.api.Plugin

@@ -6,17 +6,7 @@ plugins {
 
 android {
     namespace = "es.sebas1705.data.datastore"
-
-    sourceSets {
-        named("debug") {
-            java.srcDir("build/generated/source/proto/debug/java")
-            kotlin.srcDir("build/generated/source/proto/debug/kotlin")
-        }
-        named("release") {
-            java.srcDir("build/generated/source/proto/release/java")
-            kotlin.srcDir("build/generated/source/proto/release/kotlin")
-        }
-    }
+    // protobuf-gradle-plugin 0.10 registers the generated Java/Kotlin sources with AGP itself.
 }
 
 protobuf {

@@ -53,7 +53,7 @@ enum class CoreFlavor(
  * @author Sebas1705 01/03/2025
  */
 fun configureFlavors(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension,
     flavorConfigurationBlock : ProductFlavor.(flavor : CoreFlavor) -> Unit = {}
 ) {
     val secretsPropertiesFile = File("./app/secrets.properties")

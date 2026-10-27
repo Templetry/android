@@ -5,7 +5,6 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.buildlogic.application)
     alias(libs.plugins.buildlogic.firebase)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -75,17 +74,6 @@ android {
     configurations.all {
         resolutionStrategy {
             force("org.jetbrains:annotations:23.0.0")
-        }
-    }
-
-    applicationVariants.all {
-        val variant = name
-        val vCode = versionCode
-        val vName = versionName
-        outputs.all {
-            val projectName = project.name
-            val outputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            outputImpl.outputFileName = "$projectName-$variant(c.$vCode)-$vName.apk"
         }
     }
 

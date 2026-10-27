@@ -49,7 +49,7 @@ firebase-messaging = "24.1.2"
 firebase-crashlytics-plugin = "3.0.6"
 
 # Dependency injection (Hilt)
-hilt = "2.58"
+hilt = "2.59.2"
 hilt-navigation = "1.3.0"
 
 # Networking and serialization (Retrofit, OkHttp, converters)
@@ -73,7 +73,7 @@ googleid = "1.1.1"
 # Datastore and Protobuf (for proto-based datastore)
 datastore = "1.2.1"
 protobuf = "4.34.1"
-protobufPlugin = "0.9.6"
+protobufPlugin = "0.10.0"
 
 # Utility libraries
 accompanist = "0.36.0"    # system UI controller and other accompanist helpers
@@ -98,9 +98,9 @@ mockito-inline = "5.2.0"
 robolectric = "4.16.1"
 
 # Gradle / plugin versions
-androidAppPluginVersion = "8.9.1"
-androidGradlePlugin = "8.9.1"
-androidToolsCommon = "31.9.1"
+androidAppPluginVersion = "9.4.1"
+androidGradlePlugin = "9.4.1"
+androidToolsCommon = "32.4.1"
 googleServices = "4.4.4"
 kotlin-gradle-plugin = "2.3.21"
 ksp = "2.3.7"
@@ -255,8 +255,6 @@ junit-junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 # Android application/library and Kotlin plugins used by the Gradle build
 android-application = { id = "com.android.application", version.ref = "androidAppPluginVersion" }
 android-library = { id = "com.android.library", version.ref = "androidAppPluginVersion" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
 dependency-analyze = { id = "ca.cutterslade.analyze", version.ref = "dependency-analyze" }

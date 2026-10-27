@@ -21,8 +21,6 @@ import kotlin.math.max
 class UnitTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply(plugin = "org.jetbrains.kotlin.android")
-
             dependencies {
                 androidTestImplementation(libs.findLibrary("kotlinx-test").get())
                 androidTestImplementation(libs.findLibrary("mockwebserver").get())

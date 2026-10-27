@@ -150,7 +150,7 @@ pluginManager.apply("com.android.library")
 // Intermediate: apply multiple plugins
 pluginManager.apply {
     apply("com.android.library")
-    apply("kotlin-android")
+    // No kotlin-android: AGP 9 compiles Kotlin itself (built-in Kotlin).
     apply("org.jetbrains.kotlin.plugin.compose")
 }
 ```
@@ -245,13 +245,13 @@ class HiltConventionPlugin : Plugin<Project> {
             // 1. Apply plugins
             pluginManager.apply {
                 apply("com.google.dagger.hilt.android")
-                apply("kotlin-kapt")  // Required for Hilt in modules
+                apply("com.google.devtools.ksp")  // kapt is incompatible with AGP 9 built-in Kotlin
             }
             
             // 2. Add dependencies
             dependencies {
                 implementation(libs.findLibrary("hilt.android").get())
-                kapt(libs.findLibrary("hilt.compiler").get())
+                add("ksp", libs.findLibrary("hilt.compiler").get())
                 
                 // Compose integration if available
                 implementation(libs.findLibrary("hilt.navigation").get())

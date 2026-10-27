@@ -28,8 +28,6 @@ class AppConventionPlugin: Plugin<Project> {
                 } else {
                     logger.lifecycle("Skipping Firebase Gradle plugins: test run or missing google-services.json.")
                 }
-                apply("org.jetbrains.kotlin.kapt")
-                apply("org.jetbrains.kotlin.android")
                 apply("buildlogic.android.hilt")
                 apply("buildlogic.android.compose")
                 apply("buildlogic.android.lifecycle")
