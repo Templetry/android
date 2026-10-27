@@ -1,6 +1,6 @@
 package libraries
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import es.sebas1705.convention.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -17,14 +17,15 @@ class LibraryConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager){
                 apply("com.android.library")
-                apply("org.jetbrains.kotlin.android")
                 apply("buildlogic.android.detekt")
             }
 
             // Configuration to apply to all Android libraries
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 36
+                // AGP 9 libraries have no defaultConfig.targetSdk: it only ever mattered to tests and lint.
+                testOptions.targetSdk = 36
+                lint.targetSdk = 36
                 defaultConfig.minSdk = 31
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 testOptions.animationsDisabled = true
